@@ -84,8 +84,14 @@ export default async function LabsPage() {
                 {vals.map((v) => {
                   const tag = getTag(v.value, v.reference_low, v.reference_high);
                   return (
-                    <div key={v.marker_code} className="flex items-center justify-between py-2.5">
-                      <span>{markerNames.get(v.marker_code) ?? v.marker_code}</span>
+                    <Link
+                      key={v.marker_code}
+                      href={`/labs/${v.marker_code}`}
+                      className="flex items-center justify-between py-2.5"
+                    >
+                      <span className="underline decoration-dotted underline-offset-2">
+                        {markerNames.get(v.marker_code) ?? v.marker_code}
+                      </span>
                       <span className="flex items-center gap-1.5">
                         <span className="font-medium">
                           {v.value} {v.unit}
@@ -96,7 +102,7 @@ export default async function LabsPage() {
                           </span>
                         )}
                       </span>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
