@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FemHealth — Mockups v1</title>
+<style>
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #F5F4EE;
+    --color-background-tertiary: #F1EFE8;
+    --color-text-primary: #1F1F2E;
+    --color-text-secondary: #5F5E5A;
+    --color-text-tertiary: #888780;
+    --color-border-tertiary: rgba(31, 31, 46, 0.15);
+    --color-border-secondary: rgba(31, 31, 46, 0.30);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+  body {
+    margin: 0;
+    background: #FAFAF7;
+    font-family: var(--font-sans);
+    color: var(--color-text-primary);
+    padding: 32px 16px 64px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 500; margin: 0 0 4px; }
+  .subtitle { color: var(--color-text-secondary); font-size: 14px; margin: 0 0 32px; }
+
+  .phone { width: 290px; margin: 0 auto; background: #1F1F2E; border-radius: 32px; padding: 6px; box-sizing: border-box; }
+  .scr { background: var(--color-background-primary); border-radius: 26px; overflow: hidden; height: 580px; display: flex; flex-direction: column; }
+  .statusbar { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px 4px; font-size: 11px; color: var(--color-text-primary); font-weight: 500; }
+  .appbar { padding: 8px 16px 12px; display: flex; align-items: center; justify-content: space-between; }
+  .appbar .title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+  .scr-body { flex: 1; padding: 0 16px; overflow: hidden; }
+  .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 0.5px solid var(--color-border-tertiary); padding: 8px 0 10px; background: var(--color-background-primary); }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; color: var(--color-text-tertiary); }
+  .tab.active { color: #993556; }
+  .tab .dot { width: 18px; height: 18px; border-radius: 4px; background: var(--color-background-secondary); }
+  .tab.active .dot { background: #FBEAF0; }
+  .section-label { font-size: 14px; color: var(--color-text-secondary); margin: 24px 4px 14px; }
+  .section-label:first-of-type { margin-top: 0; }
+  .frame-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .btn-pill { display: inline-block; padding: 6px 12px; border-radius: 999px; font-size: 12px; }
+  .chip { display: inline-block; padding: 4px 10px; font-size: 11px; border-radius: 999px; background: var(--color-background-secondary); color: var(--color-text-secondary); margin-right: 6px; margin-bottom: 6px; }
+  .chip.act { background: #FBEAF0; color: #72243E; }
+  .lab-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 12px; }
+  .lab-row:last-child { border-bottom: 0; }
+  .tag-norm { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #E1F5EE; color: #085041; }
+  .tag-warn { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #FAEEDA; color: #633806; }
+  .tag-out { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #FCEBEB; color: #791F1F; }
+  .frame-cap { font-size: 12px; color: var(--color-text-tertiary); text-align: center; margin-top: 8px; }
+  .desk { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 8px; }
+  .desk-window { background: var(--color-background-primary); border-radius: 10px; overflow: hidden; }
+  .desk-titlebar { background: #2C2C2A; height: 22px; display: flex; align-items: center; padding: 0 10px; gap: 6px; }
+  .desk-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .desk-app { display: grid; grid-template-columns: 200px 1fr; min-height: 480px; }
+  .desk-sidebar { background: var(--color-background-tertiary); padding: 16px 12px; border-right: 0.5px solid var(--color-border-tertiary); }
+  .desk-main { padding: 18px 22px; }
+  .desk-logo { font-size: 14px; font-weight: 500; color: #993556; margin-bottom: 18px; }
+  .nav-item { padding: 8px 10px; font-size: 13px; color: var(--color-text-secondary); border-radius: 6px; margin-bottom: 2px; }
+  .nav-item.active { background: #FBEAF0; color: #72243E; font-weight: 500; }
+  .kvp { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .kvp:last-child { border-bottom: 0; }
+  .metric-card { background: var(--color-background-secondary); border-radius: 8px; padding: 12px; }
+  .metric-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .metric-value { font-size: 20px; font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>FemHealth — мокапы v1</h1>
+<p class="subtitle">Цифровой кабинет пациентки гинеколога-эндокринолога. Черновик ключевых экранов.</p>
+
+<div class="section-label">Пациентское приложение (PWA, mobile-first)</div>
+
+<div class="frame-row">
+<div>
+<div class="phone"><div class="scr">
+  <div class="statusbar"><span>9:41</span><span style="display:flex; gap:4px;"><span style="width:14px; height:8px; border:1px solid var(--color-text-primary); border-radius:2px; display:inline-block;"></span></span></div>
+  <div class="appbar"><span class="title">Привет, Анна</span><span style="width:28px; height:28px; border-radius:50%; background:#FBEAF0; color:#993556; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500;">А</span></div>
+  <div class="scr-body">
+    <svg viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg" style="width:100%; display:block;">
+      <circle cx="130" cy="110" r="92" fill="none" stroke="#F1EFE8" stroke-width="14"/>
+      <path d="M 130 18 A 92 92 0 0 1 222 110" fill="none" stroke="#F09595" stroke-width="14" stroke-linecap="round"/>
+      <path d="M 222 110 A 92 92 0 0 1 195 178" fill="none" stroke="#FAC775" stroke-width="14" stroke-linecap="round"/>
+      <path d="M 195 178 A 92 92 0 0 1 65 178" fill="none" stroke="#9FE1CB" stroke-width="14" stroke-linecap="round"/>
+      <path d="M 65 178 A 92 92 0 0 1 130 18" fill="none" stroke="#D3D1C7" stroke-width="14" stroke-linecap="round"/>
+      <text x="130" y="100" text-anchor="middle" font-size="13" fill="var(--color-text-secondary)">День цикла</text>
+      <text x="130" y="130" text-anchor="middle" font-size="34" font-weight="500" fill="var(--color-text-primary)">12</text>
+      <text x="130" y="150" text-anchor="middle" font-size="11" fill="#993556">Фолликулярная фаза</text>
+    </svg>
+    <div style="text-align:center; font-size:11px; color:var(--color-text-tertiary); margin: 4px 0 14px;">Овуляция через ~2 дня</div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom: 12px;">
+      <div class="btn-pill" style="background:#FBEAF0; color:#993556; text-align:center;">+ Менструация</div>
+      <div class="btn-pill" style="background:var(--color-background-secondary); color:var(--color-text-primary); text-align:center;">+ Симптом</div>
+    </div>
+    <div style="background:#FAEEDA; border-radius:8px; padding:10px 12px; font-size:11px; color:#633806;">
+      <div style="font-weight:500; margin-bottom:2px;">Внимание</div>
+      Пролактин 32 нг/мл — выше нормы. Покажите врачу.
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active"><div class="dot"></div>Главная</div>
+    <div class="tab"><div class="dot"></div>Журнал</div>
+    <div class="tab"><div class="dot"></div>Анализы</div>
+    <div class="tab"><div class="dot"></div>Профиль</div>
+  </div>
+</div></div>
+<div class="frame-cap">1. Главная — цикл и быстрый ввод</div>
+</div>
+
+<div>
+<div class="phone"><div class="scr">
+  <div class="statusbar"><span>9:41</span><span style="display:flex; gap:4px;"><span style="width:14px; height:8px; border:1px solid var(--color-text-primary); border-radius:2px; display:inline-block;"></span></span></div>
+  <div class="appbar"><span class="title">Анализы</span><span class="btn-pill" style="background:#993556; color:#fff;">+ Добавить</span></div>
+  <div class="scr-body">
+    <div style="margin-bottom: 10px;">
+      <span class="chip act">Все</span>
+      <span class="chip">Гормоны</span>
+      <span class="chip">Щитовидка</span>
+      <span class="chip">Углеводы</span>
+    </div>
+    <div style="font-size:11px; color:var(--color-text-tertiary); margin: 8px 0 4px;">12 апреля · Инвитро · день цикла 5</div>
+    <div class="lab-row"><span>ФСГ</span><span style="display:flex; align-items:center; gap:6px;"><span style="font-weight:500;">6.2 мМЕ/мл</span><span class="tag-norm">норма</span></span></div>
+    <div class="lab-row"><span>ЛГ</span><span style="display:flex; align-items:center; gap:6px;"><span style="font-weight:500;">14.8 мМЕ/мл</span><span class="tag-warn">погр.</span></span></div>
+    <div class="lab-row"><span>Эстрадиол</span><span style="display:flex; align-items:center; gap:6px;"><span style="font-weight:500;">52 пг/мл</span><span class="tag-norm">норма</span></span></div>
+    <div class="lab-row"><span>Пролактин</span><span style="display:flex; align-items:center; gap:6px;"><span style="font-weight:500;">32 нг/мл</span><span class="tag-out">↑</span></span></div>
+    <div class="lab-row"><span>ТТГ</span><span style="display:flex; align-items:center; gap:6px;"><span style="font-weight:500;">2.1 мМЕ/л</span><span class="tag-norm">норма</span></span></div>
+    <div class="lab-row"><span>HOMA-IR</span><span style="display:flex; align-items:center; gap:6px;"><span style="font-weight:500;">3.4</span><span class="tag-out">↑</span></span></div>
+    <div style="margin-top:14px; padding:10px; background:var(--color-background-secondary); border-radius:8px; font-size:11px;">
+      <div style="color:var(--color-text-secondary); margin-bottom:2px;">Заметка врача · Елена П.</div>
+      <div style="color:var(--color-text-primary);">Пересдать пролактин на 5–7 дц после ночного покоя.</div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><div class="dot"></div>Главная</div>
+    <div class="tab"><div class="dot"></div>Журнал</div>
+    <div class="tab active"><div class="dot"></div>Анализы</div>
+    <div class="tab"><div class="dot"></div>Профиль</div>
+  </div>
+</div></div>
+<div class="frame-cap">2. Анализы — список с подсветкой норм</div>
+</div>
+</div>
+
+<div class="frame-row">
+<div>
+<div class="phone"><div class="scr">
+  <div class="statusbar"><span>9:41</span><span style="display:flex; gap:4px;"><span style="width:14px; height:8px; border:1px solid var(--color-text-primary); border-radius:2px; display:inline-block;"></span></span></div>
+  <div class="appbar"><span class="title">Эстрадиол</span><span style="font-size:18px; color:var(--color-text-secondary);">⋯</span></div>
+  <div class="scr-body">
+    <div style="font-size:11px; color:var(--color-text-tertiary); margin-bottom:10px;">пг/мл · последние 6 циклов</div>
+    <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" style="width:100%; display:block;">
+      <rect x="20" y="40" width="60" height="140" fill="#E1F5EE" opacity="0.55"/>
+      <rect x="80" y="20" width="40" height="160" fill="#FBEAF0" opacity="0.7"/>
+      <rect x="120" y="50" width="120" height="130" fill="#E1F5EE" opacity="0.55"/>
+      <line x1="20" y1="180" x2="240" y2="180" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+      <line x1="20" y1="140" x2="240" y2="140" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <line x1="20" y1="100" x2="240" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <line x1="20" y1="60" x2="240" y2="60" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <polyline points="30,150 60,135 90,55 120,90 150,120 180,135 210,140 235,135"
+                fill="none" stroke="#993556" stroke-width="2"/>
+      <circle cx="30" cy="150" r="3" fill="#993556"/>
+      <circle cx="60" cy="135" r="3" fill="#993556"/>
+      <circle cx="90" cy="55" r="3" fill="#993556"/>
+      <circle cx="120" cy="90" r="3" fill="#993556"/>
+      <circle cx="150" cy="120" r="3" fill="#993556"/>
+      <circle cx="180" cy="135" r="3" fill="#993556"/>
+      <circle cx="210" cy="140" r="3" fill="#993556"/>
+      <circle cx="235" cy="135" r="3" fill="#993556"/>
+      <text x="50" y="194" text-anchor="middle" font-size="9" fill="var(--color-text-secondary)">Фолликул.</text>
+      <text x="100" y="194" text-anchor="middle" font-size="9" fill="#993556">Овул.</text>
+      <text x="180" y="194" text-anchor="middle" font-size="9" fill="var(--color-text-secondary)">Лютеин.</text>
+    </svg>
+    <div style="display:flex; gap:6px; align-items:center; margin: 14px 0 6px; font-size:11px; color:var(--color-text-secondary);">
+      <span style="width:10px; height:10px; background:#E1F5EE; border-radius:2px;"></span> Норма по фазе
+      <span style="width:10px; height:10px; background:#FBEAF0; border-radius:2px; margin-left:8px;"></span> Овуляторный пик
+    </div>
+    <div style="margin-top:10px; padding:10px; background:var(--color-background-secondary); border-radius:8px; font-size:11px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--color-text-secondary);">Последнее значение</span><span style="font-weight:500;">52 пг/мл</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:var(--color-text-secondary);">Тренд за 3 цикла</span><span style="color:#085041; font-weight:500;">стабильно</span></div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><div class="dot"></div>Главная</div>
+    <div class="tab"><div class="dot"></div>Журнал</div>
+    <div class="tab active"><div class="dot"></div>Анализы</div>
+    <div class="tab"><div class="dot"></div>Профиль</div>
+  </div>
+</div></div>
+<div class="frame-cap">3. Динамика гормона с нормами по фазам</div>
+</div>
+
+<div>
+<div class="phone"><div class="scr">
+  <div class="statusbar"><span>9:41</span><span style="display:flex; gap:4px;"><span style="width:14px; height:8px; border:1px solid var(--color-text-primary); border-radius:2px; display:inline-block;"></span></span></div>
+  <div class="appbar"><span class="title">Мои врачи</span><span class="btn-pill" style="background:#993556; color:#fff;">+ Добавить</span></div>
+  <div class="scr-body">
+    <div style="background:var(--color-background-secondary); border-radius:10px; padding:14px; margin-bottom:12px;">
+      <div style="display:flex; gap:10px; align-items:center; margin-bottom:8px;">
+        <div style="width:38px; height:38px; border-radius:50%; background:#FBEAF0; color:#993556; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:500;">ЕП</div>
+        <div>
+          <div style="font-size:13px; font-weight:500;">Елена Петрова</div>
+          <div style="font-size:11px; color:var(--color-text-secondary);">Гинеколог-эндокринолог</div>
+        </div>
+        <span style="margin-left:auto; font-size:10px; color:#085041; background:#E1F5EE; padding:2px 6px; border-radius:4px;">активен</span>
+      </div>
+      <div style="font-size:11px; color:var(--color-text-secondary); border-top:0.5px solid var(--color-border-tertiary); padding-top:8px;">
+        Клиника «Здоровье», Москва<br>
+        Доступ: цикл, симптомы, анализы<br>
+        Подключён 3 апреля
+      </div>
+    </div>
+    <div style="background:var(--color-background-secondary); border-radius:10px; padding:14px;">
+      <div style="font-size:12px; font-weight:500; margin-bottom:8px;">Подключить врача</div>
+      <div style="font-size:11px; color:var(--color-text-secondary); margin-bottom:12px;">Введите код от врача или отсканируйте QR</div>
+      <div style="display:flex; gap:6px; justify-content:center; margin-bottom:10px;">
+        <span style="width:28px; height:36px; border:0.5px solid var(--color-border-secondary); border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:500;">7</span>
+        <span style="width:28px; height:36px; border:0.5px solid var(--color-border-secondary); border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:500;">K</span>
+        <span style="width:28px; height:36px; border:0.5px solid var(--color-border-secondary); border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:500;">2</span>
+        <span style="width:28px; height:36px; border:0.5px solid var(--color-border-tertiary); border-radius:6px;"></span>
+        <span style="width:28px; height:36px; border:0.5px solid var(--color-border-tertiary); border-radius:6px;"></span>
+        <span style="width:28px; height:36px; border:0.5px solid var(--color-border-tertiary); border-radius:6px;"></span>
+      </div>
+      <div style="text-align:center; font-size:11px; color:#993556;">или сканировать QR-код</div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><div class="dot"></div>Главная</div>
+    <div class="tab"><div class="dot"></div>Журнал</div>
+    <div class="tab"><div class="dot"></div>Анализы</div>
+    <div class="tab active"><div class="dot"></div>Профиль</div>
+  </div>
+</div></div>
+<div class="frame-cap">4. Связка пациент-врач</div>
+</div>
+</div>
+
+<div class="section-label">Кабинет врача (web, desktop)</div>
+
+<div class="desk">
+  <div class="desk-window">
+    <div class="desk-titlebar">
+      <span class="desk-dot" style="background:#F09595;"></span>
+      <span class="desk-dot" style="background:#FAC775;"></span>
+      <span class="desk-dot" style="background:#9FE1CB;"></span>
+      <span style="color:#888780; font-size:11px; margin-left:14px;">femhealth.ru/doctor/patients/anna-k</span>
+    </div>
+    <div class="desk-app">
+      <div class="desk-sidebar">
+        <div class="desk-logo">FemHealth · Doctor</div>
+        <div class="nav-item">Дашборд</div>
+        <div class="nav-item active">Пациентки · 47</div>
+        <div class="nav-item">Расписание</div>
+        <div class="nav-item">Шаблоны</div>
+        <div class="nav-item">Настройки</div>
+        <div style="margin-top:18px; font-size:11px; color:var(--color-text-tertiary); text-transform:uppercase; letter-spacing:0.5px;">Сегодня</div>
+        <div style="margin-top:8px; padding:8px 10px; background:var(--color-background-primary); border-radius:6px; font-size:12px;">
+          <div style="color:var(--color-text-secondary); font-size:10px;">14:30</div>
+          Анна К. · СПКЯ
+        </div>
+        <div style="margin-top:6px; padding:8px 10px; background:var(--color-background-primary); border-radius:6px; font-size:12px;">
+          <div style="color:var(--color-text-secondary); font-size:10px;">15:00</div>
+          Марина С. · Беспл.
+        </div>
+      </div>
+      <div class="desk-main">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div style="width:42px; height:42px; border-radius:50%; background:#FBEAF0; color:#993556; display:flex; align-items:center; justify-content:center; font-weight:500;">АК</div>
+          <div>
+            <div style="font-size:16px; font-weight:500;">Анна Кириллова</div>
+            <div style="font-size:12px; color:var(--color-text-secondary);">29 лет · СПКЯ · подключена 3 апр · приём сегодня в 14:30</div>
+          </div>
+          <div style="margin-left:auto; display:flex; gap:6px;">
+            <span class="btn-pill" style="background:var(--color-background-secondary); color:var(--color-text-primary); font-size:11px; border:0.5px solid var(--color-border-tertiary);">Экспорт PDF</span>
+            <span class="btn-pill" style="background:#993556; color:#fff; font-size:11px;">Назначить анализы</span>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:8px; margin-bottom:16px;">
+          <div class="metric-card"><div class="metric-label">День цикла</div><div class="metric-value">12</div></div>
+          <div class="metric-card"><div class="metric-label">Длина цикла</div><div class="metric-value">34<span style="font-size:13px; color:var(--color-text-secondary);"> ср</span></div></div>
+          <div class="metric-card"><div class="metric-label">Симптомы за 30 дн</div><div class="metric-value">23</div></div>
+          <div class="metric-card" style="background:#FAEEDA;"><div class="metric-label" style="color:#633806;">Тревог</div><div class="metric-value" style="color:#412402;">2</div></div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:14px;">
+          <div>
+            <div style="font-size:13px; font-weight:500; margin-bottom:8px;">Гормоны · последние 4 точки</div>
+            <svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg" style="width:100%; display:block; background:var(--color-background-secondary); border-radius:8px;">
+              <rect x="20" y="20" width="320" height="100" fill="#E1F5EE" opacity="0.4"/>
+              <line x1="20" y1="120" x2="340" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+              <polyline points="30,90 110,75 200,55 295,72" fill="none" stroke="#993556" stroke-width="2"/>
+              <polyline points="30,100 110,95 200,80 295,90" fill="none" stroke="#534AB7" stroke-width="2" stroke-dasharray="4,3"/>
+              <polyline points="30,40 110,38 200,42 295,30" fill="none" stroke="#BA7517" stroke-width="2"/>
+              <circle cx="30" cy="90" r="3" fill="#993556"/><circle cx="110" cy="75" r="3" fill="#993556"/><circle cx="200" cy="55" r="3" fill="#993556"/><circle cx="295" cy="72" r="3" fill="#993556"/>
+              <text x="30" y="140" font-size="10" fill="var(--color-text-secondary)">янв</text>
+              <text x="110" y="140" font-size="10" fill="var(--color-text-secondary)">фев</text>
+              <text x="200" y="140" font-size="10" fill="var(--color-text-secondary)">мар</text>
+              <text x="295" y="140" font-size="10" fill="var(--color-text-secondary)">апр</text>
+              <text x="20" y="14" font-size="10" fill="#993556">— Эстрадиол</text>
+              <text x="120" y="14" font-size="10" fill="#534AB7">-- ФСГ</text>
+              <text x="180" y="14" font-size="10" fill="#BA7517">— Пролактин</text>
+            </svg>
+          </div>
+          <div>
+            <div style="font-size:13px; font-weight:500; margin-bottom:8px;">Тревожные значения</div>
+            <div class="kvp"><span>Пролактин · 12 апр</span><span style="color:#791F1F; font-weight:500;">32 нг/мл ↑</span></div>
+            <div class="kvp"><span>HOMA-IR · 12 апр</span><span style="color:#791F1F; font-weight:500;">3.4 ↑</span></div>
+            <div class="kvp"><span>ЛГ/ФСГ · 12 апр</span><span style="color:#633806; font-weight:500;">2.4 погр.</span></div>
+            <div class="kvp"><span>Тестостерон · 5 фев</span><span style="color:#085041; font-weight:500;">в норме</span></div>
+            <div style="margin-top:10px; padding:10px; background:var(--color-background-secondary); border-radius:6px; font-size:11px;">
+              <div style="font-weight:500; margin-bottom:4px;">Рекомендация для пациентки</div>
+              <div style="color:var(--color-text-secondary);">Пересдать пролактин на 5–7 дц утром после ночного покоя. Глюкоза + инсулин натощак.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top: 32px; font-size: 12px; color: var(--color-text-tertiary); text-align: center;">FemHealth · мокапы v0.1 · черновик для обсуждения с медицинским экспертом</p>
+
+</div>
+</body>
+</html>

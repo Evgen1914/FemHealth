@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #1f1f2e;
+  --muted: #f5f4ee;
+  --muted-foreground: #5f5e5a;
+  --border: rgba(31, 31, 46, 0.15);
+  --primary: #993556;
+  --primary-foreground: #ffffff;
+  --accent: #fbeaf0;
+  --accent-foreground: #72243e;
+  --destructive: #791f1f;
+  --warning: #633806;
+  --warning-bg: #faeeda;
+  --success: #085041;
+  --success-bg: #e1f5ee;
+  --danger-bg: #fcebeb;
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-danger-bg: var(--danger-bg);
+  --radius: var(--radius);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
