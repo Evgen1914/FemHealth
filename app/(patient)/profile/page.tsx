@@ -2,6 +2,8 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { SignOutButton } from '@/components/patient/sign-out-button';
 import { LinkDoctorForm } from '@/components/patient/link-doctor-form';
+import { ProfileForm } from '@/components/patient/profile-form';
+import { WeightTracker } from '@/components/patient/weight-tracker';
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -10,6 +12,27 @@ export default async function ProfilePage() {
   } = await supabase.auth.getUser();
 
   if (!user) redirect('/login');
+
+  const { data: patientProfile } = await supabase
+    .from('patient_profiles')
+    .select('birth_date, height_cm, weight_kg, avg_cycle_length, primary_diagnoses')
+    .eq('user_id', user.id)
+    .single();
+
+  const { data: weightHistory } = await supabase
+    .from('weight_log')
+    .select('date, weight_kg')
+    .eq('patient_id', user.id)
+    .order('date', { ascending: true });
+
+  const weightData = (weightHistory ?? []).map((w) => ({
+    date: w.date,
+    weight: Number(w.weight_kg),
+    label: new Date(w.date + 'T00:00:00').toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'short',
+    }),
+  }));
 
   const { data: links } = await supabase
     .from('patient_links')
@@ -39,7 +62,21 @@ export default async function ProfilePage() {
           <p className="text-sm font-medium">{user.email ?? '—'}</p>
         </div>
 
-        {/* Привязанные врачи */}
+        <ProfileForm
+          initial={{
+            birth_date: patientProfile?.birth_date ?? null,
+            height_cm: patientProfile?.height_cm ?? null,
+            weight_kg: patientProfile?.weight_kg ? Number(patientProfile.weight_kg) : null,
+            avg_cycle_length: patientProfile?.avg_cycle_length ?? 28,
+            primary_diagnoses: patientProfile?.primary_diagnoses ?? [],
+          }}
+        />
+
+        <WeightTracker
+          data={weightData}
+          currentWeight={patientProfile?.weight_kg ? Number(patientProfile.weight_kg) : null}
+        />
+
         {links && links.length > 0 && (
           <div className="space-y-2">
             <p className="text-xs font-medium">Ваши врачи</p>
