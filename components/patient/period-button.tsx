@@ -1,6 +1,7 @@
 'use client';
 
 import { useTransition } from 'react';
+import { Droplets } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { logPeriodStart, logPeriodEnd } from '@/app/(patient)/dashboard/actions';
 
@@ -26,12 +27,16 @@ export function PeriodButton({ isOnPeriod }: PeriodButtonProps) {
   return (
     <Button
       variant="default"
-      size="sm"
-      className="rounded-full"
+      className="gap-2 rounded-full py-2.5 shadow-sm"
       onClick={handleClick}
       disabled={pending}
     >
-      {pending ? '...' : isOnPeriod ? 'Менструация закончилась' : '+ Менструация'}
+      <Droplets className="h-4 w-4" />
+      {pending
+        ? '...'
+        : isOnPeriod
+          ? 'Закончилась'
+          : 'Менструация'}
     </Button>
   );
 }

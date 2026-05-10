@@ -1,5 +1,7 @@
 'use client';
 
+import { Stethoscope } from 'lucide-react';
+
 interface Comment {
   id: string;
   text: string;
@@ -23,12 +25,18 @@ export function DoctorComments({ comments }: DoctorCommentsProps) {
   if (comments.length === 0) return null;
 
   return (
-    <div className="mt-4 space-y-2">
-      <p className="text-xs font-medium">Рекомендации врача</p>
+    <div className="mt-5 space-y-2.5">
+      <div className="flex items-center gap-1.5">
+        <Stethoscope className="h-3.5 w-3.5 text-primary" />
+        <p className="text-xs font-semibold">Рекомендации врача</p>
+      </div>
       {comments.map((c) => (
-        <div key={c.id} className="rounded-lg bg-muted p-3">
+        <div
+          key={c.id}
+          className="rounded-xl border border-border/40 bg-muted/60 p-3 shadow-sm"
+        >
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-medium text-foreground">
+            <p className="text-[11px] font-semibold text-foreground">
               {c.doctor_name}
             </p>
             <span className="text-[10px] text-muted-foreground">
@@ -39,11 +47,13 @@ export function DoctorComments({ comments }: DoctorCommentsProps) {
             </span>
           </div>
           {c.target_type && c.target_type !== 'general' && (
-            <span className="mt-0.5 inline-block rounded bg-accent px-1.5 py-0.5 text-[10px] text-accent-foreground">
+            <span className="mt-1 inline-block rounded-md bg-accent px-1.5 py-0.5 text-[10px] font-medium text-accent-foreground">
               {targetLabels[c.target_type] ?? c.target_type}
             </span>
           )}
-          <p className="mt-1 text-xs text-muted-foreground">{c.text}</p>
+          <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+            {c.text}
+          </p>
         </div>
       ))}
     </div>

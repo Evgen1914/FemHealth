@@ -16,8 +16,8 @@ export function TabBar() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky bottom-0 border-t border-border bg-background">
-      <div className="grid grid-cols-4">
+    <nav className="sticky bottom-0 border-t border-border/60 bg-background/80 backdrop-blur-lg">
+      <div className="mx-auto grid max-w-md grid-cols-4 px-2 pb-[env(safe-area-inset-bottom)]">
         {tabs.map((tab) => {
           const isActive = pathname.startsWith(tab.href);
           const Icon = tab.icon;
@@ -26,11 +26,26 @@ export function TabBar() {
               key={tab.href}
               href={tab.href}
               className={cn(
-                'flex flex-col items-center gap-1 py-2 text-[10px]',
-                isActive ? 'text-primary' : 'text-muted-foreground',
+                'flex flex-col items-center gap-0.5 pt-2 pb-1.5 text-[10px] font-medium transition-colors duration-200',
+                isActive
+                  ? 'text-primary'
+                  : 'text-muted-foreground active:text-foreground',
               )}
             >
-              <Icon className="h-5 w-5" />
+              <div
+                className={cn(
+                  'flex h-8 w-8 items-center justify-center rounded-xl transition-all duration-200',
+                  isActive && 'bg-accent',
+                )}
+              >
+                <Icon
+                  className={cn(
+                    'h-[18px] w-[18px] transition-all duration-200',
+                    isActive && 'scale-110',
+                  )}
+                  strokeWidth={isActive ? 2.5 : 2}
+                />
+              </div>
               {tab.label}
             </Link>
           );
