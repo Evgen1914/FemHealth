@@ -9,6 +9,7 @@ import {
   getDaysUntilOvulation,
   getDaysUntilPeriod,
 } from '@/lib/medical/cycle';
+import { DoctorComments } from '@/components/patient/doctor-comments';
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -59,6 +60,26 @@ export default async function DashboardPage() {
 
   const isOnPeriod = phase === 'menstrual';
 
+  const { data: comments } = await supabase
+    .from('doctor_comments')
+    .select('id, text, target_type, created_at, doctor_id')
+    .eq('patient_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(5);
+
+  const doctorIds = [...new Set((comments ?? []).map((c) => c.doctor_id))];
+  const { data: doctorProfiles } =
+    doctorIds.length > 0
+      ? await supabase
+          .from('doctor_profiles')
+          .select('user_id, full_name')
+          .in('user_id', doctorIds)
+      : { data: [] };
+
+  const doctorNames = new Map(
+    doctorProfiles?.map((d) => [d.user_id, d.full_name]) ?? [],
+  );
+
   let hint = 'Отметьте первый день менструации, чтобы начать трекинг';
   if (cycleDay !== null) {
     if (daysUntilOvulation !== null && daysUntilOvulation > 0) {
@@ -93,6 +114,16 @@ export default async function DashboardPage() {
           + Симптом
         </Link>
       </div>
+
+      <DoctorComments
+        comments={(comments ?? []).map((c) => ({
+          id: c.id,
+          text: c.text,
+          target_type: c.target_type,
+          created_at: c.created_at,
+          doctor_name: doctorNames.get(c.doctor_id) ?? 'Врач',
+        }))}
+      />
 
       <p className="mt-4 text-center text-[10px] text-muted-foreground">
         Не является диагностикой, обсудите с врачом.
