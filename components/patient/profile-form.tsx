@@ -53,17 +53,18 @@ export function ProfileForm({ initial }: ProfileFormProps) {
     <div className="space-y-3 rounded-lg border border-border p-3">
       <p className="text-xs font-medium">Личные данные</p>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-1">
+      <div className="grid grid-cols-2 gap-x-3 gap-y-4">
+        <div className="min-w-0 space-y-1.5">
           <Label htmlFor="birth_date" className="text-[11px]">Дата рождения</Label>
           <Input
             id="birth_date"
             type="date"
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
+            className="max-w-full"
           />
         </div>
-        <div className="space-y-1">
+        <div className="min-w-0 space-y-1.5">
           <Label htmlFor="cycle_length" className="text-[11px]">Длина цикла (дн.)</Label>
           <Input
             id="cycle_length"
@@ -72,10 +73,7 @@ export function ProfileForm({ initial }: ProfileFormProps) {
             onChange={(e) => setCycleLength(e.target.value)}
           />
         </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-1">
+        <div className="min-w-0 space-y-1.5">
           <Label htmlFor="height" className="text-[11px]">Рост (см)</Label>
           <Input
             id="height"
@@ -85,7 +83,7 @@ export function ProfileForm({ initial }: ProfileFormProps) {
             onChange={(e) => setHeight(e.target.value)}
           />
         </div>
-        <div className="space-y-1">
+        <div className="min-w-0 space-y-1.5">
           <Label htmlFor="weight" className="text-[11px]">Вес (кг)</Label>
           <Input
             id="weight"
