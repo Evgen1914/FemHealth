@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { SignOutButton } from '@/components/patient/sign-out-button';
+import { AccountActions } from '@/components/patient/account-actions';
 
 export default async function DoctorSettingsPage() {
   const supabase = await createClient();
@@ -54,6 +55,8 @@ export default async function DoctorSettingsPage() {
             Сообщите этот код пациентке, чтобы она могла привязаться к вам
           </p>
         </div>
+
+        <AccountActions />
 
         <SignOutButton />
       </div>

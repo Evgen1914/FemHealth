@@ -61,3 +61,45 @@ export async function confirmLink(patientId: string) {
   revalidatePath('/patients');
   return { error: null };
 }
+
+export async function rejectLink(patientId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return { error: 'Не авторизован' };
+
+  const { error } = await supabase
+    .from('patient_links')
+    .delete()
+    .eq('doctor_id', user.id)
+    .eq('patient_id', patientId)
+    .eq('status', 'pending');
+
+  if (error) return { error: error.message };
+
+  revalidatePath('/patients');
+  return { error: null };
+}
+
+export async function unlinkPatient(patientId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return { error: 'Не авторизован' };
+
+  const { error } = await supabase
+    .from('patient_links')
+    .delete()
+    .eq('doctor_id', user.id)
+    .eq('patient_id', patientId)
+    .eq('status', 'active');
+
+  if (error) return { error: error.message };
+
+  revalidatePath('/patients');
+  return { error: null };
+}

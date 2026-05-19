@@ -96,6 +96,33 @@ export async function linkDoctor(inviteCode: string) {
 
   if (error) return { error: error.message };
 
+  await supabase.from('consents').insert({
+    user_id: user.id,
+    type: 'doctor_share',
+    version: '1.0',
+    accepted: true,
+  });
+
   revalidatePath('/profile');
   return { error: null, doctorName: doctor.full_name };
+}
+
+export async function unlinkDoctor(doctorId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return { error: 'Не авторизована' };
+
+  const { error } = await supabase
+    .from('patient_links')
+    .delete()
+    .eq('patient_id', user.id)
+    .eq('doctor_id', doctorId);
+
+  if (error) return { error: error.message };
+
+  revalidatePath('/profile');
+  return { error: null };
 }

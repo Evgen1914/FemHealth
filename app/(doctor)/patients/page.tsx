@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { getCycleDay, getCyclePhase, PHASE_LABELS } from '@/lib/medical/cycle';
 import { ConfirmLinkButton } from '@/components/doctor/confirm-link-button';
+import { RejectLinkButton } from '@/components/doctor/reject-link-button';
+import { UnlinkPatientButton } from '@/components/doctor/unlink-patient-button';
 
 export default async function PatientsPage() {
   const supabase = await createClient();
@@ -104,7 +106,10 @@ export default async function PatientsPage() {
                   </div>
                   <span className="text-xs font-medium">{pendingName}</span>
                 </div>
-                <ConfirmLinkButton patientId={link.patient_id} />
+                <div className="flex gap-1">
+                  <ConfirmLinkButton patientId={link.patient_id} />
+                  <RejectLinkButton patientId={link.patient_id} />
+                </div>
               </div>
             );
           })}
@@ -138,12 +143,14 @@ export default async function PatientsPage() {
           }
 
           return (
-            <Link
+            <div
               key={link.patient_id}
-              href={`/patients/${link.patient_id}`}
               className="flex items-center justify-between rounded-lg border border-border p-3 transition-colors hover:bg-muted"
             >
-              <div className="flex items-center gap-3">
+              <Link
+                href={`/patients/${link.patient_id}`}
+                className="flex flex-1 items-center gap-3"
+              >
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-sm font-medium text-accent-foreground">
                   {name[0]?.toUpperCase() ?? '?'}
                 </div>
@@ -154,9 +161,14 @@ export default async function PatientsPage() {
                     {phaseLabel}
                   </p>
                 </div>
+              </Link>
+              <div className="flex items-center gap-2">
+                <UnlinkPatientButton patientId={link.patient_id} />
+                <Link href={`/patients/${link.patient_id}`} className="text-muted-foreground">
+                  →
+                </Link>
               </div>
-              <span className="text-muted-foreground">→</span>
-            </Link>
+            </div>
           );
         })}
       </div>

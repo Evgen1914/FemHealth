@@ -4,6 +4,8 @@ import { SignOutButton } from '@/components/patient/sign-out-button';
 import { LinkDoctorForm } from '@/components/patient/link-doctor-form';
 import { ProfileForm } from '@/components/patient/profile-form';
 import { WeightTracker } from '@/components/patient/weight-tracker';
+import { AccountActions } from '@/components/patient/account-actions';
+import { UnlinkDoctorButton } from '@/components/patient/unlink-doctor-button';
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -51,7 +53,7 @@ export default async function ProfilePage() {
   const doctorMap = new Map(doctors?.map((d) => [d.user_id, d]) ?? []);
 
   return (
-    <div className="px-4 pb-20">
+    <div className="px-4">
       <header className="py-3">
         <h1 className="text-lg font-medium">Профиль</h1>
       </header>
@@ -91,15 +93,21 @@ export default async function ProfilePage() {
                     <p className="font-medium">{doc?.full_name ?? 'Врач'}</p>
                     <p className="text-muted-foreground">{doc?.specialty ?? ''}</p>
                   </div>
-                  <span
-                    className={`rounded px-1.5 py-0.5 text-[10px] ${
-                      l.status === 'active'
-                        ? 'bg-success-bg text-success'
-                        : 'bg-warning-bg text-warning'
-                    }`}
-                  >
-                    {l.status === 'active' ? 'Активно' : 'Ожидание'}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`rounded px-1.5 py-0.5 text-[10px] ${
+                        l.status === 'active'
+                          ? 'bg-success-bg text-success'
+                          : 'bg-warning-bg text-warning'
+                      }`}
+                    >
+                      {l.status === 'active' ? 'Активно' : 'Ожидание'}
+                    </span>
+                    <UnlinkDoctorButton
+                      doctorId={l.doctor_id}
+                      status={l.status as 'active' | 'pending'}
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -107,6 +115,8 @@ export default async function ProfilePage() {
         )}
 
         <LinkDoctorForm />
+
+        <AccountActions />
 
         <SignOutButton />
       </div>
