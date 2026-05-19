@@ -1,9 +1,8 @@
-const CACHE_NAME = 'femhealth-v1';
-const PRECACHE_URLS = ['/dashboard', '/login'];
+const CACHE_NAME = 'femhealth-v2';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
+    caches.open(CACHE_NAME).then((cache) => cache.add('/offline'))
   );
   self.skipWaiting();
 });
@@ -23,17 +22,34 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
 
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        if (response.ok && url.pathname.startsWith('/_next/static/')) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        }
-        return response;
-      })
-      .catch(() =>
-        caches.match(event.request).then((cached) => cached || Response.error())
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() =>
+        caches.match('/offline').then((cached) => cached || Response.error())
       )
+    );
+    return;
+  }
+
+  if (url.pathname.startsWith('/_next/static/')) {
+    event.respondWith(
+      caches.match(event.request).then((cached) =>
+        cached ||
+        fetch(event.request).then((response) => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+      )
+    );
+    return;
+  }
+
+  event.respondWith(
+    fetch(event.request).catch(() =>
+      caches.match(event.request).then((cached) => cached || Response.error())
+    )
   );
 });
