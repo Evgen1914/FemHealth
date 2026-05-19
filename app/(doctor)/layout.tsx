@@ -26,10 +26,12 @@ export default async function DoctorLayout({
         <div className="mb-6 text-sm font-medium text-primary">FemHealth · Врач</div>
         <DoctorNav />
       </aside>
-      <main className="flex-1">
+      <main className="flex-1 pb-16 lg:pb-0">
         {children}
-        <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background lg:hidden">
-          <DoctorNav mobile />
+        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/80 backdrop-blur-lg lg:hidden">
+          <div className="pb-[env(safe-area-inset-bottom)]">
+            <DoctorNav mobile />
+          </div>
         </div>
       </main>
     </div>

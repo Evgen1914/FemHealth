@@ -1,6 +1,6 @@
 import { type CyclePhase, PHASE_LABELS, PHASE_COLORS } from '@/lib/medical/cycle';
 
-interface CycleRingProps {
+export interface CycleRingProps {
   cycleDay: number | null;
   phase: CyclePhase;
   avgCycleLength: number;

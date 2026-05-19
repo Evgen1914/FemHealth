@@ -3,6 +3,7 @@
 import { useTransition } from 'react';
 import { Droplets } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { motion, springTap, springTransition } from '@/components/ui/motion';
 import { logPeriodStart, logPeriodEnd } from '@/app/(patient)/dashboard/actions';
 
 interface PeriodButtonProps {
@@ -25,18 +26,20 @@ export function PeriodButton({ isOnPeriod }: PeriodButtonProps) {
   }
 
   return (
-    <Button
-      variant="default"
-      className="gap-2 rounded-full py-2.5 shadow-sm"
-      onClick={handleClick}
-      disabled={pending}
-    >
-      <Droplets className="h-4 w-4" />
-      {pending
-        ? '...'
-        : isOnPeriod
-          ? 'Закончилась'
-          : 'Менструация'}
-    </Button>
+    <motion.div whileTap={springTap} transition={springTransition}>
+      <Button
+        variant="default"
+        className="w-full gap-2 rounded-full py-2.5 shadow-sm"
+        onClick={handleClick}
+        disabled={pending}
+      >
+        <Droplets className="h-4 w-4" />
+        {pending
+          ? '...'
+          : isOnPeriod
+            ? 'Закончилась'
+            : 'Менструация'}
+      </Button>
+    </motion.div>
   );
 }

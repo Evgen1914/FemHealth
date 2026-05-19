@@ -1,8 +1,9 @@
 'use client';
 
 import { Stethoscope } from 'lucide-react';
+import { motion, fadeUp, staggerContainer, springTransition } from '@/components/ui/motion';
 
-interface Comment {
+export interface DoctorComment {
   id: string;
   text: string;
   target_type: string;
@@ -11,7 +12,7 @@ interface Comment {
 }
 
 interface DoctorCommentsProps {
-  comments: Comment[];
+  comments: DoctorComment[];
 }
 
 const targetLabels: Record<string, string> = {
@@ -25,14 +26,21 @@ export function DoctorComments({ comments }: DoctorCommentsProps) {
   if (comments.length === 0) return null;
 
   return (
-    <div className="mt-5 space-y-2.5">
+    <motion.div
+      className="mt-5 space-y-2.5"
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+    >
       <div className="flex items-center gap-1.5">
         <Stethoscope className="h-3.5 w-3.5 text-primary" />
         <p className="text-xs font-semibold">Рекомендации врача</p>
       </div>
       {comments.map((c) => (
-        <div
+        <motion.div
           key={c.id}
+          variants={fadeUp}
+          transition={springTransition}
           className="rounded-xl border border-border/40 bg-muted/60 p-3 shadow-sm"
         >
           <div className="flex items-center justify-between">
@@ -54,8 +62,8 @@ export function DoctorComments({ comments }: DoctorCommentsProps) {
           <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
             {c.text}
           </p>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
